@@ -1,0 +1,8 @@
+from socket import * #Disponibiliza funções relacionadas a sockets(portas)
+host = ('0.0.0.0') #IP da máquina destino da conexão
+port = 50029  #porta que o cliente usará para estabelecer a conexão e envio de dados
+cli = socket(AF_INET, SOCK_STREAM) #cria a porta de conexão do tipo inet, streaming
+cli.connect((host, port)) #estabelece a conexão com o host
+while 1:
+    msg = input("Digite: ") #laço de repetição que após a conexão fica responsavél pela troca de mensagens/dados
+    cli.send(msg.encode()) #codifica e envia a mensagem
