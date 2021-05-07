@@ -1,12 +1,19 @@
-from socket import * #Disponibiliza funções relacionadas a sockets(portas).
-host = ('0.0.0.0') #IP local da máquina onde será aberto a conexão.
-port = 50029 #porta em que o 'servidor' estará esperando a conexão.
-print(f'HOST: {host} , PORT {port}') #Mostra na tela o nome do host e da porta em que a conexão inicia.
-serv = socket(AF_INET, SOCK_STREAM) #cria a porta de conexão do tipo inet, streaming.
-serv.bind((host, port)) #determina que o socket estará disponivel para conexão com qualquer máquina que possua seu ip.
-serv.listen(5) #define como máximo, 5 requisições de conexão.
-while 1: #enquanto.
-    con, adr = serv.accept() #primeiro laço onde se espera a conexão ser estabelecida.
-    while 1: #enquanto.
-        msg = con.recv(1024) #segundo laço com a conexão ja estabelecida fica esperando a mensagem.
-        print(msg.decode()) #mostra na tela a mensagem decodificada.
+import socket  #Disponibiliza funções relacionadas a sockets(portas).
+
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  #cria a porta de conexão do tipo inet, streaming.
+server.bind(('0.0.0.0', 8888)) #IP da máquina onde será aberto a conexão. e porta em que o 'servidor' estará esperando a conexão.
+server.listen(5)  #define como máximo, 5 requisições de conexão.
+print('Server open \n')  #Mostra na tela que o servidor foi aberto
+
+con, adr = server.accept()  #aceita a conexão com os parametros da tupla.
+namefile = con.recv(1024).decode() #recebe o nome do arquivo txt e decodifica
+print( 'connectado \n') #printa na tela que está conectado
+
+with open(namefile, 'wb') as file: #abre o arquivo txt que será transcrito(download), abre com o with para garantir que sera fechado
+    while 1:
+        data = con.recv(1000000)
+        if not data:
+            break
+        file.write(data)
+
+print('{} Recebido \n') #printa na tela que deu tudo certo e fecha a conexão
